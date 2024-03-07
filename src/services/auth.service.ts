@@ -12,11 +12,13 @@ export const loginService = async (email: string, password: string): Promise<IRe
 
         if (user === undefined) {
             error.setCode("234-UJW")
+            error.setDescription('Credenciales no encontradas')
             return Promise.reject(error.build())
         }
 
         if (!(await verifyPassword(password, user.password || ""))) {
             error.setCode("244-UJW")
+            error.setDescription('Contraseña incorrecta.')
             return Promise.reject(error.build())
         }
 

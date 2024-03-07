@@ -1,14 +1,16 @@
 import express from "express";
 import { loginService } from "../services/auth.service";
+import { loginDto } from "../dtos/login.dto";
+
 const router = express.Router();
 
-router.post("/login", async (req, res) => {
+router.post("/login", loginDto, async (req, res) => {
     try {
         const email: string = req.body.email;
         const password: string = req.body.password;
         const token = await loginService(email, password)
         res.send(token).status(200)
-    } catch (error) { 
+    } catch (error) {
         const err: any = error
         if (err?.code && err?.message) {
             res.send(err).status(400)

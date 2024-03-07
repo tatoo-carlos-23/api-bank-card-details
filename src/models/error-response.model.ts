@@ -3,6 +3,7 @@ import { IErrorResponse } from "../interfaces/error-response.interface";
 export class ErrorResponse {
     private code: string = "CODE-GENERIC";
     private message: string = "Ocurrio un error";
+    private description!: string;
 
     public get getCode(): string {
         return this.code
@@ -22,11 +23,22 @@ export class ErrorResponse {
         return this
     }
 
+    public setDescription(description: string): this {
+        this.description = description
+        return this
+    }
+
     public build(): IErrorResponse {
-        return {
+        const res: IErrorResponse = {
             code: this.code,
             message: this.message
+        };
+
+        if (this.description) {
+            res.description = this.description;
         }
+        
+        return res;
     }
 
 }
